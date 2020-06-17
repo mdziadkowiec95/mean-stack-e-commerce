@@ -8,10 +8,10 @@ require('dotenv').config();
 const environment = argv.environment;
 const isProduction = environment === 'prod';
 
-if (!process.env.SECRET_KEY) {
-    console.error('All the required environment variables were not provided!');
-    process.exit(-1);
- }
+if (!process.env) {
+   console.error('All the required environment variables were not provided!');
+   process.exit(-1);
+}
 
 const targetPath = isProduction
    ? `./src/environments/environment.prod.ts`
@@ -21,7 +21,11 @@ const targetPath = isProduction
 const environmentFileContent = `
     export const environment = {
         production: ${isProduction},
-        API_URL: "${process.env.SECRET_KEY}",
+        MONGO_USER: "${process.env.MONGO_USER}",
+        MONGO_PASSWORD: "${process.env.MONGO_PASSWORD}",
+        MONGO_DBNAME: "${process.env.MONGO_DBNAME}",
+        CF_SPACE_ID: "${process.env.CF_SPACE_ID}",
+        CF_DELIVERY_ACCESS_TOKEN: "${process.env.CF_DELIVERY_ACCESS_TOKEN}",
     };
 `;
 // write the content to the respective file
