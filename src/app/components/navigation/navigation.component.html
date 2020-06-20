@@ -1,0 +1,7 @@
+<nav>
+    <ul *ngIf="(categories$ | async) as categories">
+        <li *ngFor="let category of categories">
+            <a routerLink="/products/{{ category.fields.fieldName }}">{{ category.fields.title }}</a>
+        </li>
+    </ul>
+</nav>
