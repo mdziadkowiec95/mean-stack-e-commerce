@@ -4,4 +4,8 @@
             <a routerLink="/products/{{ category.fields.fieldName }}">{{ category.fields.title }}</a>
         </li>
     </ul>
+    <a routerLink="/cart">Go to cart</a>
+    <button (click)="authService.toggleIsAuth()">Toggle isAuth</button>
+    <p>isAuth: {{ authService.isAuth.getValue() }}</p>
+
 </nav>

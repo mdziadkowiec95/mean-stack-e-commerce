@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ContentfulService } from 'src/app/shared/services/contentful.service';
+import { map } from 'rxjs/operators';
+import { ProductListItem } from '../../interfaces/product-list-item.interface';
 
 @Component({
   selector: 'app-products-list',
@@ -9,7 +11,7 @@ import { ContentfulService } from 'src/app/shared/services/contentful.service';
 })
 export class ProductsListComponent implements OnInit {
 
-  products: any[];
+  products: ProductListItem[];
 
   constructor(private route: ActivatedRoute, private cfService: ContentfulService) { }
 
@@ -18,9 +20,13 @@ export class ProductsListComponent implements OnInit {
   }
 
   getProducts(params: Params): void {
-    this.cfService.getProducts(params.category).subscribe(products => {
-      console.log(products);
-
+    this.cfService.getProducts(params.category).pipe(map(products => products.map(p => ({
+      id: p.sys.id,
+      slug: p.fields.slug,
+      name: p.fields.productName,
+      price: p.fields.price,
+      image: p.fields.image[0]
+    })))).subscribe((products: ProductListItem[]) => {
       this.products = products;
     });
   }

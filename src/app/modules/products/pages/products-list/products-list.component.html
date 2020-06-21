@@ -1,3 +1,7 @@
 <ul *ngIf="products && products.length > 0">
-    <li *ngFor="let product of products">{{ product.fields.productName }}</li>
+    <li *ngFor="let product of products">
+        <app-product-card
+            [product]="product"
+        ></app-product-card>
+    </li>
 </ul>
