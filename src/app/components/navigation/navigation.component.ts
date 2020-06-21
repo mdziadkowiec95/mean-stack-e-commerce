@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContentfulService } from 'src/app/shared/services/contentful.service';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/interfaces/contentful';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +13,7 @@ export class NavigationComponent implements OnInit {
 
   categories$: Observable<Category[]>;
 
-  constructor(private cfService: ContentfulService) { }
+  constructor(public authService: AuthService, private cfService: ContentfulService) { }
 
   ngOnInit() {
     this.getCategories();
